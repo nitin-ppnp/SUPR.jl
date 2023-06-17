@@ -11,24 +11,27 @@ First, register on the SUPR website https://supr.is.tue.mpg.de/. Then download t
 ## Using the package
 In julia REPL
 ```julia
-]add https://github.com/nitin-ppnp/SUPR.jl
+using Pkg;
+Pkg.add("https://github.com/nitin-ppnp/SUPR.jl")
 ```
 
-- run the following code to visualize the zero pose ($\theta$) and shape ($\beta$). Here we use 10 PCA coefficients for the shape, but it can be any number upto 400.
+- run the following code to visualize the zero pose ($\theta$) and shape ($\beta$). Here we use 10 PCA coefficients for the shape, but it can be any number upto 300.
 ```julia
 using SUPR;
 
 # create SMPL model
-supr = createSUPR("path/to/the/SMPL/model/.npz/file");
+supr = createSUPR("path/to/the/SUPR/model/.npz/file");
 
 # get output dict containing the body vertices and 3D joints
 supr_out = supr_lbs(supr,zeros(Float32,10),zeros(Float32,225));
 
 # visualize zero pose and shape
-viz_supr(supr,zeros(Float32,10),zeros(Float32,225),color=:turquoise)
+scene = viz_supr(supr,zeros(Float32,10),zeros(Float32,225),color=:turquoise)
 ```
 
 ## Explore first 10 shape components interactively
-```julia
-include("src/scripts/shape_interact.jl")
+From the terminal
+```bash
+julia -i --project src/scripts/shape_interact.jl "path/to/the/SUPR/model/.npz/file"
 ```
+![](assets/SUPR_shape_interact.gif)

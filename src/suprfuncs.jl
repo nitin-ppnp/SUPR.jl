@@ -2,9 +2,9 @@ using NPZ; npz=NPZ
 using LinearAlgebra
 using SparseArrays;
 using SharedArrays;
-using Makie;
 using Distributed;
 using TensorOperations;
+using GLMakie;
 
 struct SUPRdata
     v_template::Array{Float32,2}
@@ -183,6 +183,10 @@ end
 
 function viz_supr(supr::SUPRdata,betas::Array{Float32,1},pose::Array{Float32,1};kwargs...)
     verts = supr_lbs(supr,betas,pose)["vertices"]
-    scene = Makie.mesh(verts',supr.f;kwargs...)
-    return scene
+    f = Figure()
+    scene = LScene(f[1,1],show_axis=false)
+    mesh!(scene,verts',supr.f;kwargs...)
+    cam = cameracontrols(scene)
+    rotate_cam!(scene.scene,cam,(-0.95, -2.365, 0))
+    return f
 end

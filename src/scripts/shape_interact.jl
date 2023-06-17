@@ -43,5 +43,5 @@ cam = cameracontrols(scene)
 rotate_cam!(scene.scene,cam,(-0.95, -2.365, 0))
 
 
-f
+display(f)
 
