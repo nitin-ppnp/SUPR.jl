@@ -99,8 +99,8 @@ function supr_lbs(supr,betas,pose=zeros(Float32,225),orient=zeros(Float32,3),tra
     G[1:3,1:3,1] = R[1,:,:]
     G[1:3,4,1] = J_[1,:]
     for i = 2:75
-        G[1:3,1:3,i], G[1:3,4,i] = so3_so3_prod(R[supr.parents[i-1],:,:],
-                                                J_[supr.parents[i-1],:],
+        G[1:3,1:3,i], G[1:3,4,i] = so3_so3_prod(G[1:3,1:3,supr.parents[i-1]],
+                                                G[1:3,4,supr.parents[i-1]],
                                                 R[i,:,:],
                                                 J_[i,:])
         G[4,4,i] = 1f0
